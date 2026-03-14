@@ -149,7 +149,7 @@
       display: grid;
     }
 
-    /* Two-column layout for Mob Museum */
+    /* Two-column layout for Mob Museum on desktop */
     .option-group.mob-group {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -371,9 +371,12 @@
         padding: 0 1.5rem;
       }
 
-      /* Increase gap between stacked cards for better spacing */
-      .grid-3, .grid-2, .option-group.active {
-        gap: 2rem !important;
+      /* Force all grid containers to stack with increased gap */
+      .grid-3, 
+      .grid-2, 
+      .option-group.active {
+        grid-template-columns: 1fr !important;  /* ensure stacking */
+        gap: 2.5rem !important;                  /* more visible spacing */
       }
 
       .section-title h2 {
