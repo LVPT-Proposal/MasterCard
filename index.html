@@ -362,7 +362,7 @@
     /* ========== RESPONSIVE BREAKPOINTS ========== */
     @media (max-width: 1024px) {
       .grid-3 {
-        gap: 1.5rem;
+        gap: 2.5rem;
       }
     }
 
@@ -371,13 +371,14 @@
         padding: 0 1.5rem;
       }
 
-      /* Force all grid containers to stack with increased gap */
-      .grid-3, 
-      .grid-2, 
-      .option-group.active {
-        grid-template-columns: 1fr !important;  /* ensure stacking */
-        gap: 2.5rem !important;                  /* more visible spacing */
-      }
+      @media (max-width: 768px) {
+  .grid-3, 
+  .grid-2, 
+  .option-group.active {
+    grid-template-columns: 1fr !important;
+    gap: 3.5rem !important;  /* same as Venetian cards */
+  }
+}
 
       .section-title h2 {
         font-size: 2rem;
@@ -539,6 +540,17 @@
         font-size: 2.3rem;
       }
     }
+    .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
   </style>
 </head>
 <body>
