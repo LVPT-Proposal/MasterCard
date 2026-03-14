@@ -317,11 +317,13 @@
       border: none;
     }
 
-    /* PROS IMAGES */
+    /* PROS IMAGES - fixed cropping issue */
     .pro-image {
       width: 100%;
-      height: 280px;
-      object-fit: cover;
+      height: auto;            /* allow natural height */
+      max-height: 320px;       /* limit to avoid overly tall images */
+      object-fit: contain;     /* show full image, no cropping */
+      background-color: #1a1a1a; /* subtle background if image has transparency */
     }
 
     .pros-disclaimer {
@@ -398,11 +400,16 @@
       .card-content {
         padding: 1.5rem;
       }
+
+      /* Increase spacing between sections on tablets */
+      section {
+        padding: 4rem 2rem !important;
+      }
     }
 
     @media (max-width: 480px) {
       .container {
-        padding: 0 1rem;
+        padding: 0 1.25rem;   /* slightly more breathing room */
       }
 
       .hero {
@@ -479,9 +486,25 @@
       .animated-circle {
         display: none;
       }
+
+      /* Increase vertical spacing between sections on small phones */
+      section {
+        padding: 4rem 1rem !important;
+      }
+
+      /* Ensure last section's text doesn't overflow */
+      .closing-section .container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        word-break: break-word;
+      }
     }
 
     @media (max-width: 360px) {
+      .container {
+        padding: 0 1rem;
+      }
+
       .hero-content h1 {
         font-size: 2rem !important;
       }
@@ -496,6 +519,11 @@
 
       .check-item {
         font-size: 0.9rem;
+      }
+
+      /* Even more padding for the tiniest screens */
+      section {
+        padding: 3.5rem 0.75rem !important;
       }
     }
   </style>
@@ -853,8 +881,8 @@
     </div>
   </section>
 
-  <!-- CLOSING -->
-  <section style="position: relative; border-top: 1px solid rgba(255,255,255,0.1); padding: 7rem 2rem;">
+  <!-- CLOSING (added class for specific mobile fixes) -->
+  <section class="closing-section" style="position: relative; border-top: 1px solid rgba(255,255,255,0.1); padding: 7rem 2rem;">
     <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b46364fc5128cf4e7a2482.jpg" alt="Venetian Poker Room" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
     <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7);"></div>
 
