@@ -320,10 +320,10 @@
     /* PROS IMAGES - fixed cropping issue */
     .pro-image {
       width: 100%;
-      height: auto;            /* allow natural height */
-      max-height: 320px;       /* limit to avoid overly tall images */
-      object-fit: contain;     /* show full image, no cropping */
-      background-color: #1a1a1a; /* subtle background if image has transparency */
+      height: auto;
+      max-height: 320px;
+      object-fit: contain;
+      background-color: #1a1a1a;
     }
 
     .pros-disclaimer {
@@ -371,14 +371,9 @@
         padding: 0 1.5rem;
       }
 
-      .grid-3, .grid-2 {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      /* Override both 3-col and 2-col groups to stack */
-      .option-group.active {
-        grid-template-columns: 1fr !important;
+      /* Increase gap between stacked cards for better spacing */
+      .grid-3, .grid-2, .option-group.active {
+        gap: 2rem !important;
       }
 
       .section-title h2 {
@@ -401,7 +396,6 @@
         padding: 1.5rem;
       }
 
-      /* Increase spacing between sections on tablets */
       section {
         padding: 4rem 2rem !important;
       }
@@ -409,7 +403,7 @@
 
     @media (max-width: 480px) {
       .container {
-        padding: 0 1.25rem;   /* slightly more breathing room */
+        padding: 0 1.25rem;
       }
 
       .hero {
@@ -487,12 +481,10 @@
         display: none;
       }
 
-      /* Increase vertical spacing between sections on small phones */
       section {
         padding: 4rem 1rem !important;
       }
 
-      /* Ensure last section's text doesn't overflow */
       .closing-section .container {
         padding-left: 1.25rem;
         padding-right: 1.25rem;
@@ -521,9 +513,27 @@
         font-size: 0.9rem;
       }
 
-      /* Even more padding for the tiniest screens */
       section {
         padding: 3.5rem 0.75rem !important;
+      }
+    }
+
+    /* Strongest Play title size adjustment (2px smaller) */
+    .strongest-play-title {
+      font-size: 3.375rem; /* 54px at 16px base */
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    @media (max-width: 768px) {
+      .strongest-play-title {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .strongest-play-title {
+        font-size: 2.3rem;
       }
     }
   </style>
@@ -839,7 +849,7 @@
     </div>
   </section>
 
-  <!-- PROS -->
+  <!-- PROS (updated with $6+ million info) -->
   <section class="container" style="padding: 6rem 2rem;">
     <div class="section-title">
       <span class="eyebrow">World Class Pros</span>
@@ -853,7 +863,7 @@
         <div style="padding: 1.5rem;">
           <div style="color: rgba(255,255,255,0.8);">WSOP Champion</div>
           <h3 class="gradient-text" style="font-size: 1.75rem; font-weight: 700;">Jeff Madsen</h3>
-          <p style="color: rgba(255,255,255,0.85);">4x WSOP bracelet winner</p>
+          <p style="color: rgba(255,255,255,0.85);">4x WSOP bracelet winner • $6+ Million in Tournament Winnings</p>
         </div>
       </div>
       <div class="card">
@@ -861,7 +871,7 @@
         <div style="padding: 1.5rem;">
           <div style="color: rgba(255,255,255,0.8);">WPT Champion</div>
           <h3 class="gradient-text" style="font-size: 1.75rem; font-weight: 700;">Nick Pupillo</h3>
-          <p style="color: rgba(255,255,255,0.85);">World Poker Tour champion</p>
+          <p style="color: rgba(255,255,255,0.85);">World Poker Tour champion • $6+ Million in Tournament Winnings</p>
         </div>
       </div>
       <div class="card">
@@ -869,7 +879,7 @@
         <div style="padding: 1.5rem;">
           <div style="color: rgba(255,255,255,0.8);">Vegas Legend</div>
           <h3 class="gradient-text" style="font-size: 1.75rem; font-weight: 700;">Kenna James</h3>
-          <p style="color: rgba(255,255,255,0.85);">Elite live poker coach</p>
+          <p style="color: rgba(255,255,255,0.85);">Elite live poker coach • $6+ Million in Tournament Winnings</p>
         </div>
       </div>
     </div>
@@ -881,13 +891,13 @@
     </div>
   </section>
 
-  <!-- CLOSING (added class for specific mobile fixes) -->
+  <!-- CLOSING (adjusted title size) -->
   <section class="closing-section" style="position: relative; border-top: 1px solid rgba(255,255,255,0.1); padding: 7rem 2rem;">
     <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b46364fc5128cf4e7a2482.jpg" alt="Venetian Poker Room" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
     <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7);"></div>
 
     <div class="container" style="position: relative; z-index: 10;">
-      <h2 style="font-size: 3.5rem; font-weight: 700; line-height: 1.2;">YOUR STRONGEST PLAY</h2>
+      <h2 class="strongest-play-title">YOUR STRONGEST PLAY</h2>
       <p style="max-width: 800px; margin-top: 1.5rem; font-size: 1.25rem; color: rgba(255,255,255,0.9);">
         From the iconic Venetian Poker Room to the cinematic Mob Museum Distillery to high-end restaurant environments such as Toca Madera, Nobu, or Ruth's Chris, each option delivers a premium poker training experience tailored to the tone, flow, and hospitality style of the event.
       </p>
