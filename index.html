@@ -1,14 +1,904 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mastercard-poker-proposal</title>
-    <script type="module" crossorigin src="/assets/index-Da5J7UfI.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DykytF2W.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mastercard Poker Proposal</title>
+  <!-- Font Awesome 6 (solid icons) for fallback icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0A0A0A;
+      font-family: system-ui, -apple-system, 'Inter', sans-serif;
+      color: white;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* UTILITY CLASSES */
+    .bg-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #EB001B, #FF5F00, #F79E1B);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(90deg, #EB001B, #FF5F00, #F79E1B);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
+      max-width: 768px;
+    }
+
+    .section-title .eyebrow {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .section-title p {
+      margin-top: 1rem;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* BUTTONS */
+    .tab-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .tab-button.active {
+      background: white;
+      color: black;
+    }
+
+    .tab-button:not(.active) {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+    }
+
+    .tab-button:not(.active):hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      background: linear-gradient(90deg, #EB001B, #FF5F00, #F79E1B);
+      color: white;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 10px 20px -5px rgba(255, 95, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 30px -5px rgba(255, 95, 0, 0.4);
+    }
+
+    /* GRIDS - default for venue groups */
+    .option-group {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .option-group.active {
+      display: grid;
+    }
+
+    /* Two-column layout for Mob Museum */
+    .option-group.mob-group {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+    }
+
+    .animated-circle {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .circle1 {
+      background: #EB001B;
+      left: 10%;
+      top: 20%;
+      animation: pulse1 12s infinite alternate ease-in-out;
+    }
+
+    .circle2 {
+      background: #F79E1B;
+      right: 10%;
+      bottom: 20%;
+      animation: pulse2 12s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulse1 {
+      0% { transform: scale(0.9); opacity: 0.2; }
+      100% { transform: scale(1.05); opacity: 0.3; }
+    }
+
+    @keyframes pulse2 {
+      0% { transform: scale(1.1); opacity: 0.2; }
+      100% { transform: scale(0.95); opacity: 0.3; }
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 600px;
+      margin-top: 2.5rem;
+    }
+
+    .stat-item {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-item i {
+      font-size: 1.5rem;
+      color: #F79E1B;
+      margin-bottom: 0.5rem;
+    }
+
+    /* CARDS */
+    .experience-card {
+      height: 100%;
+    }
+
+    .card-header {
+      height: 0.5rem;
+      background: linear-gradient(90deg, #EB001B, #FF5F00, #F79E1B);
+    }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    .price-tag {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #EB001B, #FF5F00, #F79E1B);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .guest-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .check-icon {
+      color: #F79E1B;
+      width: 1.25rem;
+      text-align: center;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    /* Custom icon styling for consistency */
+    .custom-icon {
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 1rem;
+      filter: brightness(0) saturate(100%) invert(89%) sepia(15%) saturate(1747%) hue-rotate(338deg) brightness(96%) contrast(96%);
+    }
+
+    /* VIDEO */
+    .video-wrapper {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-top: 2.5rem;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+
+    /* PROS IMAGES */
+    .pro-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .pros-disclaimer {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 1rem;
+      border-left: 4px solid #F79E1B;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 800px;
+    }
+
+    /* FOOTER */
+    .footer-brand {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .footer-brand img {
+      height: 2.5rem;
+    }
+
+    .footer-brand span {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ========== RESPONSIVE BREAKPOINTS ========== */
+    @media (max-width: 1024px) {
+      .grid-3 {
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      .grid-3, .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      /* Override both 3-col and 2-col groups to stack */
+      .option-group.active {
+        grid-template-columns: 1fr !important;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .hero {
+        min-height: 600px;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem !important;
+      }
+
+      .stat-grid {
+        gap: 1rem;
+      }
+
+      .card-content {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .hero {
+        min-height: 500px;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem !important;
+        line-height: 1.2;
+      }
+
+      .hero-content p {
+        font-size: 1rem !important;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        max-width: 100%;
+      }
+
+      .stat-item {
+        padding: 0.75rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.75rem;
+      }
+
+      .section-title p {
+        font-size: 1rem;
+      }
+
+      .guest-badge {
+        white-space: normal;
+        font-size: 0.7rem;
+      }
+
+      .price-tag {
+        font-size: 1.75rem;
+      }
+
+      .card-content {
+        padding: 1.25rem;
+      }
+
+      .tab-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .cta-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .pros-disclaimer {
+        font-size: 0.85rem;
+      }
+
+      .footer-brand {
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      .footer-brand img {
+        height: 2rem;
+      }
+
+      .footer-brand span {
+        font-size: 0.6rem;
+      }
+
+      .animated-circle {
+        display: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .hero-content h1 {
+        font-size: 2rem !important;
+      }
+
+      .guest-badge {
+        padding: 0.2rem 0.75rem;
+      }
+
+      .card-content {
+        padding: 1rem;
+      }
+
+      .check-item {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <img class="hero-bg" src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b46bd1ba922c78abd3a436.png" alt="Poker table">
+    <div class="animated-circle circle1"></div>
+    <div class="animated-circle circle2"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content">
+      <h1 style="font-size: 4rem; font-weight: 700; line-height: 1.1; max-width: 900px;">
+        A <span class="gradient-text">Priceless</span> Poker Experience
+      </h1>
+      <p style="font-size: 1.25rem; color: rgba(255,255,255,0.9); max-width: 600px; margin-top: 1.5rem;">
+        An elite Las Vegas poker training experience designed for Mastercard executives and guests.
+      </p>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <i class="fas fa-users"></i>
+          <div>11-12 Guests</div>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-clock"></i>
+          <div>2 Hour Training</div>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-location-dot"></i>
+          <div>March 19</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS WORKS -->
+  <section class="container" style="padding: 6rem 2rem;">
+    <div class="section-title">
+      <span class="eyebrow">Strategic Fit</span>
+      <h2>Why this works for Mastercard</h2>
+      <p>The experience mirrors Mastercard’s brand philosophy: premium access, unforgettable moments, and social connection through shared experiences.</p>
+    </div>
+
+    <div class="grid-3" style="margin-top: 3rem;">
+      <div class="card">
+        <div class="card-content">
+          <i class="fas fa-star" style="font-size: 2rem; color: #F79E1B; margin-bottom: 1rem;"></i>
+          <h3 style="font-size: 1.5rem;">Premium Access</h3>
+          <p style="color: rgba(255,255,255,0.85); margin-top: 0.5rem;">A private poker room experience normally unavailable to the public.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <!-- Microphone icon (custom) -->
+          <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b4d992277ba0060ae8196c.png" alt="Microphone" class="custom-icon">
+          <h3 style="font-size: 1.5rem;">Memorable Entertainment</h3>
+          <p style="color: rgba(255,255,255,0.85); margin-top: 0.5rem;">Interactive strategy, competition and laughter with world-class poker pros.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <i class="fas fa-users" style="font-size: 2rem; color: #F79E1B; margin-bottom: 1rem;"></i>
+          <h3 style="font-size: 1.5rem;">Connection</h3>
+          <p style="color: rgba(255,255,255,0.85); margin-top: 0.5rem;">Poker naturally creates conversation, collaboration and camaraderie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENUE SWITCH & OPTIONS -->
+  <section class="container" style="padding: 6rem 2rem;">
+    <div class="section-title">
+      <span class="eyebrow">Experience Options</span>
+      <h2>Venue Experience Paths</h2>
+      <p>Compare Venetian Poker Room and Mob Museum Distillery experiences.</p>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+      <button class="tab-button active" id="tabVenetian">Venetian</button>
+      <button class="tab-button" id="tabMob">Mob Museum</button>
+    </div>
+
+    <!-- Venetian Options (3 cards) - default 3-column -->
+    <div id="venetianGroup" class="option-group active">
+      <!-- Full Experience -->
+      <div class="card experience-card">
+        <div class="card-header"></div>
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Full Experience</div>
+              <div class="price-tag">$11,500</div>
+            </div>
+            <span class="guest-badge">11–12 Guests</span>
+          </div>
+          <p style="margin: 1rem 0; color: rgba(255,255,255,0.85);">A full-scale Mastercard-hosted moment inside the Venetian Poker Room with hospitality, energy, and polished logistics baked in.</p>
+          <div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Take-home custom Mastercard strategy guide</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 30-40 minutes to eat, drink, and mingle</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2-hour poker training session</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 pros</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Venetian Poker Room</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Street taco bar</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Private drink bar</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Hostess / bartender</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Round-trip Sprinter service</div>
+          </div>
+        </div>
+      </div>
+      <!-- Signature Experience -->
+      <div class="card experience-card">
+        <div class="card-header"></div>
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Signature Experience</div>
+              <div class="price-tag">$8,700</div>
+            </div>
+            <span class="guest-badge">11–12 Guests</span>
+          </div>
+          <p style="margin: 1rem 0; color: rgba(255,255,255,0.85);">The cleanest high-impact option. Premium room, premium instruction, premium guest feel without the extra meal layer.</p>
+          <div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Venetian Poker Room</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Take-home custom Mastercard strategy guide</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2-hour poker training</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 pros</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Private drink bar</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Hostess / bartender</div>
+          </div>
+        </div>
+      </div>
+      <!-- Classic Experience -->
+      <div class="card experience-card">
+        <div class="card-header"></div>
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Classic Experience</div>
+              <div class="price-tag">$7,225</div>
+            </div>
+            <span class="guest-badge">11–12 Guests</span>
+          </div>
+          <p style="margin: 1rem 0; color: rgba(255,255,255,0.85);">A sharp, focused training build centered around elite poker instruction and the atmosphere of the Venetian room.</p>
+          <div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Venetian Poker Room</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Take-home custom Mastercard strategy guide</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2-hour poker training</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 pros</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mob Museum Options (2 cards) - uses mob-group class for 2-column layout on desktop -->
+    <div id="mobGroup" class="option-group mob-group">
+      <!-- Full Experience -->
+      <div class="card experience-card">
+        <div class="card-header"></div>
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Full Experience</div>
+              <div class="price-tag">$13,505</div>
+            </div>
+            <span class="guest-badge">11–12 Guests</span>
+          </div>
+          <p style="margin: 1rem 0; color: rgba(255,255,255,0.85);">Moody, cinematic, and unforgettable. The Distillery transforms the poker training into a full Vegas narrative.</p>
+          <div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Take-home custom Mastercard strategy guide</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 30-40 minutes to eat, drink, and mingle</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2-hour poker training session</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 pros</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Mob Museum Distillery</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Wide variety of finger food options</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Open top shelf bar</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Round-trip Sprinter service</div>
+          </div>
+        </div>
+      </div>
+      <!-- Signature Experience -->
+      <div class="card experience-card">
+        <div class="card-header"></div>
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Signature Experience</div>
+              <div class="price-tag">$11,505</div>
+            </div>
+            <span class="guest-badge">11–12 Guests</span>
+          </div>
+          <p style="margin: 1rem 0; color: rgba(255,255,255,0.85);">Atmosphere, premium bar, and transport wrapped around an elevated training experience.</p>
+          <div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Take-home custom Mastercard strategy guide</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 30-40 minutes to eat, drink, and mingle</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2-hour poker training session</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 pros</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Mob Museum Distillery</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Open top shelf bar</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Round-trip Sprinter service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESTAURANT / FLEX VENUE -->
+  <section class="container" style="padding: 6rem 2rem;">
+    <div class="section-title">
+      <span class="eyebrow">Restaurant / Flexible Venue</span>
+      <h2>Toca Madera · Nobu · Ruth's Chris</h2>
+      <p>High-end restaurant training with felt table covers and flexible dining flow.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top: 3rem;">
+      <!-- Left card -->
+      <div class="card">
+        <div class="card-content">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
+            <div>
+              <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Base training (any venue)</div>
+              <h3 style="font-size: 2rem; font-weight: 700; margin-top: 0.5rem;">High-end restaurant training</h3>
+              <p style="color: rgba(255,255,255,0.9);">Felt table covers · flexible dining</p>
+            </div>
+            <div class="price-tag" style="font-size: 2.5rem;">$7,200</div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 pros</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> 2 tables</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Cards</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Chips</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Custom Mastercard strategy guide</div>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 1.25rem; margin-top: 2rem; display: flex; gap: 0.75rem;">
+            <i class="fas fa-utensils" style="font-size: 1.25rem; color: #F79E1B;"></i>
+            <div>
+              <p style="color: rgba(255,255,255,0.95);">You choose: specialty menu or settle tab.</p>
+              <p style="color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Add-ons below.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right card -->
+      <div class="card">
+        <div class="card-content">
+          <div style="font-size: 0.875rem; letter-spacing: 0.25em; text-transform: uppercase; color: white;">Venue fit</div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; margin: 0.5rem 0;">Flexible restaurant execution</h3>
+          <p style="color: rgba(255,255,255,0.85); line-height: 1.7;">We can stage this experience inside Toca Madera, Nobu, Ruth's Chris, or a comparable venue of your choice, using felt table covers over existing tables where needed.</p>
+          <div style="margin-top: 2rem;">
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Ideal for a dining-first format</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Smooth hospitality integration</div>
+            <div class="check-item"><i class="fas fa-check check-icon"></i> Easy to customize around the evening</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD-ONS -->
+  <section class="container" style="padding: 6rem 2rem;">
+    <div class="section-title">
+      <span class="eyebrow">Customize with branded gear</span>
+      <h2>Add-ons for any package</h2>
+      <p>Card or chip order: 20 decks / enough chips for all students.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top: 3rem;">
+      <!-- PVC card decks -->
+      <div class="card">
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 0.75rem;">
+              <!-- Playing card icon (custom) - using user-provided URL -->
+              <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b4d992eba4873f1b3a9aa2.png" alt="Playing card" class="custom-icon" style="margin-bottom: 0;">
+            </div>
+            <span class="price-tag" style="font-size: 2rem;">+$1,000</span>
+          </div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; margin: 1rem 0 0.25rem;">Custom PVC card decks</h3>
+          <p style="font-size: 1.125rem; color: rgba(255,255,255,0.95);">20 decks, keep them</p>
+          <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Add to any package. Card order includes 20 premium PVC decks.</p>
+        </div>
+      </div>
+      <!-- Custom chips -->
+      <div class="card">
+        <div class="card-content">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 0.75rem;">
+              <i class="fas fa-coins" style="font-size: 1.5rem; color: #F79E1B;"></i>
+            </div>
+            <span class="price-tag" style="font-size: 2rem;">+$1,000</span>
+          </div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; margin: 1rem 0 0.25rem;">Full-set custom chips</h3>
+          <p style="font-size: 1.125rem; color: rgba(255,255,255,0.95);">Enough for all, take home</p>
+          <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Add to any package. Chip order includes enough chips for all students.</p>
+        </div>
+      </div>
+    </div>
+    <p style="color: rgba(255,255,255,0.7); font-size: 0.875rem; margin-top: 1.5rem;">*Add to any package · Card or chip order: 20 decks / Enough chips for all students.</p>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="container" style="padding: 6rem 2rem;">
+    <div class="section-title">
+      <span class="eyebrow">Venue Spotlight</span>
+      <h2>Mob Museum Distillery</h2>
+      <p>Preview the atmosphere of the Underground Distillery — one of the most unique corporate venues in Las Vegas.</p>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube-nocookie.com/embed/B06xlP1Rk6s" title="Mob Museum Distillery" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- PROS -->
+  <section class="container" style="padding: 6rem 2rem;">
+    <div class="section-title">
+      <span class="eyebrow">World Class Pros</span>
+      <h2>Your Instructors</h2>
+      <p>Two pros and two tables create the ideal dynamic for a group of this size.</p>
+    </div>
+
+    <div class="grid-3" style="margin-top: 3rem;">
+      <div class="card">
+        <img class="pro-image" src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/694497c2e78870ea91447991.png" alt="Jeff Madsen">
+        <div style="padding: 1.5rem;">
+          <div style="color: rgba(255,255,255,0.8);">WSOP Champion</div>
+          <h3 class="gradient-text" style="font-size: 1.75rem; font-weight: 700;">Jeff Madsen</h3>
+          <p style="color: rgba(255,255,255,0.85);">4x WSOP bracelet winner</p>
+        </div>
+      </div>
+      <div class="card">
+        <img class="pro-image" src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b35c69222c3307b3295616.webp" alt="Nick Pupillo">
+        <div style="padding: 1.5rem;">
+          <div style="color: rgba(255,255,255,0.8);">WPT Champion</div>
+          <h3 class="gradient-text" style="font-size: 1.75rem; font-weight: 700;">Nick Pupillo</h3>
+          <p style="color: rgba(255,255,255,0.85);">World Poker Tour champion</p>
+        </div>
+      </div>
+      <div class="card">
+        <img class="pro-image" src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69329adbe0f092644fb65b71.jpg" alt="Kenna James">
+        <div style="padding: 1.5rem;">
+          <div style="color: rgba(255,255,255,0.8);">Vegas Legend</div>
+          <h3 class="gradient-text" style="font-size: 1.75rem; font-weight: 700;">Kenna James</h3>
+          <p style="color: rgba(255,255,255,0.85);">Elite live poker coach</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Professional disclaimer -->
+    <div class="pros-disclaimer">
+      <i class="fas fa-info-circle" style="color: #F79E1B; margin-right: 0.5rem;"></i>
+      This is a sample of our available poker professionals. The actual instructors assigned to your event will depend on their schedules and availability at the time of booking.
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section style="position: relative; border-top: 1px solid rgba(255,255,255,0.1); padding: 7rem 2rem;">
+    <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/69b46364fc5128cf4e7a2482.jpg" alt="Venetian Poker Room" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7);"></div>
+
+    <div class="container" style="position: relative; z-index: 10;">
+      <h2 style="font-size: 3.5rem; font-weight: 700; line-height: 1.2;">YOUR STRONGEST PLAY</h2>
+      <p style="max-width: 800px; margin-top: 1.5rem; font-size: 1.25rem; color: rgba(255,255,255,0.9);">
+        From the iconic Venetian Poker Room to the cinematic Mob Museum Distillery to high-end restaurant environments such as Toca Madera, Nobu, or Ruth's Chris, each option delivers a premium poker training experience tailored to the tone, flow, and hospitality style of the event.
+      </p>
+      <a href="mailto:matt@lasvegaspokertraining.com?subject=Reserve%20YOUR%20Experience" class="cta-button" style="margin-top: 2rem;">
+        Reserve YOUR Experience <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+      </a>
+    </div>
+
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/E2BEbKIK8SvsJICq4vXY/media/688b94d7fc4ae33b5ab65b48.png" alt="Las Vegas Poker Training">
+      <span>Las Vegas Poker Training Proposal</span>
+    </div>
+  </section>
+
+  <script>
+    (function() {
+      const tabVenetian = document.getElementById('tabVenetian');
+      const tabMob = document.getElementById('tabMob');
+      const venetianGroup = document.getElementById('venetianGroup');
+      const mobGroup = document.getElementById('mobGroup');
+
+      function activateTab(activeTab) {
+        tabVenetian.classList.remove('active');
+        tabMob.classList.remove('active');
+        venetianGroup.classList.remove('active');
+        mobGroup.classList.remove('active');
+
+        if (activeTab === 'venetian') {
+          tabVenetian.classList.add('active');
+          venetianGroup.classList.add('active');
+        } else {
+          tabMob.classList.add('active');
+          mobGroup.classList.add('active');
+        }
+      }
+
+      tabVenetian.addEventListener('click', () => activateTab('venetian'));
+      tabMob.addEventListener('click', () => activateTab('mob'));
+    })();
+  </script>
+</body>
 </html>
